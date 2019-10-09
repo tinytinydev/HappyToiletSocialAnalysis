@@ -1,13 +1,7 @@
-from flask import Flask 
-from flask import render_template
+from flask import Blueprint, render_template
+home = Blueprint('home', __name__)
 
-app = Flask(__name__)
-
-@app.route("/")
-def home():
+@home.route("/index")
+@home.route("/")
+def index():
     return render_template('index.html',title='Home')
-
-@app.route("/map")
-def map():
-    return render_template('map.html',title='Map')
-    

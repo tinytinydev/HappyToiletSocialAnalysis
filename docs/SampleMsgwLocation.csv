@@ -1,2 +1,2 @@
-﻿Place,Message,Sentiment,X Coord,Y Coord
-Bugis Junction,This toilet is shit,Negative,3881641.367,-5013269.731
+﻿location,message,sentiment,sentiment score,date
+Bugis Junction,The toilet at Bugis Junction is horrible. It is not clean and there are poop stains on the toilet cover,Negative,-0.5,1/10/19
