@@ -1,10 +1,4 @@
 <html>
-    <head>
-        <title>Happy Toilet Social Analysis</title>
-    </head>
-    <body>
-        <!DOCTYPE html>
-<html>
   <head>
     <title>Simple Map</title>
     <meta name="viewport" content="initial-scale=1.0">
@@ -24,23 +18,98 @@
         margin: 0;
         padding: 0;
       }
+
+      h1 {
+        font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 10px;
+      }
+
+      .message{
+        border-bottom: 2px dotted black;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .message-box{
+        border: 0.5px dotted black;
+        padding: 10px;
+      }
+
     </style>
   </head>
   <body>
     <div id="map"></div>
-    <script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUD5q_O9fbfVUj_I2Hto9R8NMhV9dUtR8&callback=initMap"
+    async defer></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  </body>
+
+  <script type=text/javascript>
+
+      var googleMapsAPI;
       var map;
+
+      var infoWindowHTML = "<div id='infoContent'>"+
+                          "<h1>[location]</h1>" +
+                          "<p>Address: [address]<p>" +
+                              "<h2>Messages: </h2>"+
+                            "<div class= 'message-box'>" +
+                                "[message]"+
+                            "</div>"+
+
+                          "</div>"
+
       function initMap() {
+        googleMapsAPI = google.maps
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 1.352083, lng: 103.819839},
           zoom: 11.5
         });
+        AddMarkersToMap()
+        
       }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUD5q_O9fbfVUj_I2Hto9R8NMhV9dUtR8&callback=initMap"
-    async defer></script>
-  </body>
-</html>
-    </body>
+
+      function generateMessageHTML(value){
+        return "<div class='message'>" + value.message + "</div>"
+      }
+
+      function AddMarkersToMap(){
+        response = JSON.parse({{jsonResponse|tojson}})
+
+        found = response.successful
+        console.log(found)
+        found.forEach(AddMarker)
+      }
+
+      function AddMarker(value){
+
+        content = infoWindowHTML
+        content = content.replace("[location]",value.location)
+        content = content.replace("[address]",value.address)
+        
+        var messages = ""
+
+        for (i = 0; i < value.messages.length;i++){
+          messages += generateMessageHTML(value.messages[i])
+        }
+        content = content.replace("[message]",messages)        
+
+
+        var infoWindow =  new googleMapsAPI.InfoWindow({
+          content : content
+        });
+
+        var marker = new googleMapsAPI.Marker({position: {lat: value.lat , lng: value.lon}, map: map});
+        marker.addListener('click',function(){
+          infoWindow.open(map, marker)
+        });
+      }
+
+    $(function() {
+
+    });
+  </script>
 
 </html>
