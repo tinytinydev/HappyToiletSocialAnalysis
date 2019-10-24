@@ -1,5 +1,6 @@
-﻿location,message,sentiment,sentiment score,date
-Bugis Junction,The toilet at Bugis Junction is horrible. It is not clean and there are poop stains on the toilet cover,Negative,-0.5,1/10/19
-EastPoint, Toilet so clean!!,Positive,1,1/9/18
-Pasir Ris MRT, Toilet stinks!,Negative,-0.1,1/8/20
-Bugis Junction,The toilet at Bugis Junction is so clean!!.Like Real,Negative,-0.5,1/9/19
+﻿location,message,sentiment,sentiment score,date,source
+Bugis Junction,The toilet at Bugis Junction is horrible. It is not clean and there are poop stains on the toilet cover,Negative,-0.5,1/10/19,reddit
+EastPoint, Toilet so clean!!,Positive,1,1/9/18,reddit
+Pasir Ris MRT, Toilet stinks!,Negative,-0.1,1/8/20,reddit
+Bugis Junction,The toilet at Bugis Junction is so clean!!.Like Real,Negative,-0.5,1/9/19,reddit
+Katong,The toilet at Katong is so horrible,Negative,-0.5,1/9/19,reddit

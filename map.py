@@ -9,9 +9,9 @@ mapscreen = Blueprint('map', __name__)
 @mapscreen.route("/map")
 def map():
     #return "Complete"
-    csv_file = open('docs/SampleMsgwLocation.csv')
+    csv_file = open('docs/toilet_Reddit_sentiments.csv')
     response = get_coords_with_location(csv_file)
-    print(response)
+
     return render_template('map.html',title='Map',jsonResponse=response)
 
 
@@ -37,30 +37,34 @@ def get_coords_with_location(csv_file):
         date = row[4]
 
         if location not in venueDict.keys():
-            rowOneMapSearch = one_map_api_url + location
-            response =  requests.get(rowOneMapSearch)
-            results  =  json.loads(response.content.decode('utf-8'))
 
+            if location != "NIL":
+                rowOneMapSearch = one_map_api_url + location
+                response =  requests.get(rowOneMapSearch)
+                results  =  json.loads(response.content.decode('utf-8'))
 
-            if(results['found'] !=0):
-                lat = float(results["results"][0]['LATITUDE'])
-                lon = float(results["results"][0]['LONGITUDE'])
-                address = results["results"][0]['ADDRESS']
-                foundObj =  {   
-                                "location" : location,
-                                "address" : address,
-                                "messages" : [{
-                                    "sentiment": sentiment,
-                                    "message": message,
-                                    "sentiment_score" : sentiment_score,
-                                    "date": date,
-                                }],
-                                "lat" : lat,
-                                "lon" : lon
-                            }
-                venueDict[location] = foundObj
-            else:
-                not_found.append(location)
+                print("Finding: " + location)
+                if(results['found'] !=0):
+                    print(results)
+                    print("\n\n\n")
+                    lat = float(results["results"][0]['LATITUDE'])
+                    lon = float(results["results"][0]['LONGITUDE'])
+                    address = results["results"][0]['ADDRESS']
+                    foundObj =  {   
+                                    "location" : location,
+                                    "address" : address,
+                                    "messages" : [{
+                                        "sentiment": sentiment,
+                                        "message": message,
+                                        "sentiment_score" : sentiment_score,
+                                        "date": date,
+                                    }],
+                                    "lat" : lat,
+                                    "lon" : lon
+                                }
+                    venueDict[location] = foundObj
+                else:
+                    not_found.append(location)
         else: 
             foundObj = venueDict[location]
             foundObj["messages"].append({
@@ -76,5 +80,4 @@ def get_coords_with_location(csv_file):
                                 "successful": successfulFound,
                                 "unsuccessful" : not_found
                             }
-    print (json.dumps(searchJsonResponse))
     return json.dumps(searchJsonResponse)

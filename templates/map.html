@@ -7,10 +7,10 @@
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        margin-top:auto;
-        margin-bottom: auto;
-        height: 50%;
-        width:50%;
+        margin-left:auto;
+        margin-right:auto;
+        height: 100%;
+        width:80%;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -40,9 +40,12 @@
     </style>
   </head>
   <body>
-    <div id="map"></div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUD5q_O9fbfVUj_I2Hto9R8NMhV9dUtR8&callback=initMap"
-    async defer></script>
+
+    <div id="menu" style="height:10%">
+    <p style="margin-left:auto;margin-right:auto">Menu here</p>
+    </div>
+
+    
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   </body>
 
@@ -107,9 +110,7 @@
         });
       }
 
-    $(function() {
 
-    });
   </script>
 
 </html>
