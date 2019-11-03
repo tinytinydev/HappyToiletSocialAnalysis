@@ -1,13 +1,11 @@
-from flask import Flask 
-from flask import render_template
+from flask import Blueprint, render_template
+import map
 
-app = Flask(__name__)
+home = Blueprint('home', __name__)
 
-@app.route("/")
-def home():
-    return render_template('index.html',title='Home')
-
-@app.route("/map")
-def map():
-    return render_template('map.html',title='Map')
-    
+@home.route("/index")
+@home.route("/")
+def index():
+    csv_file = open('docs/toilet_Reddit_sentiments.csv')
+    response = map.get_coords_with_location(csv_file)
+    return render_template('index.html',title='Home',jsonResponse=response)
