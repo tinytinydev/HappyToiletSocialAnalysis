@@ -2,8 +2,10 @@ from flask import Blueprint, render_template
 import map
 import json
 import pandas as pd
+import math
 import numpy
 import sys
+
 sys.path.insert(0, '/instagram/')
 from instagram import instagram_crawling_methods
 
@@ -34,27 +36,35 @@ def crawl_sad_toilet():
 
     for row in rows:
         
-        display_url = row[9]
+        display_url = row[7]
         location_name = row[31]
-        poster_username = row[42]
 
-        caption = row[15].replace("[","").replace("]","")
-        caption = caption.replace("\'","\"")
-        caption_obj = json.loads(caption)
+        if location_name != None and type(location_name) == str :
+            poster_username = row[44]
+            print(row[12])
 
-         
-        coord_dict = map.get_coords_by_name(location_name)
-        print(coord_dict)
-        foundObj = {
-            "img_source": display_url,
-            "location_name": location_name,
-            "lat": coord_dict["lat"],
-            "lon": coord_dict["lon"],
-            "address": coord_dict["address"],
-            "user_name": "@" + poster_username,
-            "caption":caption_obj["node"]["text"]
-        }
-        venue_dict["posts"].append(foundObj)
+            try: 
+                caption = row[12].replace("[","").replace("]","")
+                caption = caption.replace("\'","\"")
+                caption_obj = json.loads(caption)
+
+            except:
+                caption_obj = {"node":{"text":""}}
+
+            
+            
+            coord_dict = map.get_coords_by_name(location_name)
+            print(coord_dict)
+            foundObj = {
+                "img_source": display_url,
+                "location_name": location_name,
+                "lat": coord_dict["lat"],
+                "lon": coord_dict["lon"],
+                "address": coord_dict["address"],
+                "user_name": "@" + poster_username,
+                "caption":caption_obj["node"]["text"]
+            }
+            venue_dict["posts"].append(foundObj)
 
     venue_dict["count"] = len(venue_dict["posts"])
     return json.dumps(venue_dict)
