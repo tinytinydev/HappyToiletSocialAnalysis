@@ -274,12 +274,29 @@
                 "</div>"
       }
 
+      function generateMessageHTMLInsta(value,source,username,caption){
+        console.log("Sample:" + value)
+        return "<div class='message_entry'>"+
+                    "<div style='width:50%; display:inline-block'><b>Source: "+source+"</b></div>"+
+                    "<div style='width:50%; display:inline-block; text-align:right'>User: "+username+"</div>"+
+                    "</br>"+
+                    "<div style='width:50%; display:inline-block;'><a href='"+value+"' target='_blank'><img style='width:200px' src="+value+"/></a></div>"+
+                    "<div style='width:50%; display:inline-block;'>"+caption+"</div>"+
+                "</div>"
+      }
+
       function AddMarkersToMap(){
         response = JSON.parse({{jsonResponse|tojson}})
 
         found = response.successful
         console.log(found)
         found.forEach(AddMarker)
+
+        response = JSON.parse({{insta_crawl|tojson}})
+        found = response.posts
+        console.log("INSTA FOUND")
+        console.log(found)
+        found.forEach(AddMarkerInsta)
       }
 
       function AddMarker(value){
@@ -307,6 +324,30 @@
         });
       }
  
+      function AddMarkerInsta(value){
+
+        content = infoWindowHTML
+        content = content.replace("[location]",value.location_name)
+        content = content.replace("[address]",value.address)
+
+        var messages = ""
+
+
+        message = generateMessageHTMLInsta(value.img_source,"Instagram Hashtag",value.user_name,value.caption)
+        console.log(messages)
+
+        content = content.replace("[message]",message)        
+
+
+        var infoWindow =  new googleMapsAPI.InfoWindow({
+          content : content
+        });
+
+        var marker = new googleMapsAPI.Marker({position: {lat: value.lat , lng: value.lon}, map: map, icon: "img/icons/toilet3.png"});
+        marker.addListener('click',function(){
+          infoWindow.open(map, marker)
+        });
+      }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUD5q_O9fbfVUj_I2Hto9R8NMhV9dUtR8&callback=initMap"
     async defer></script>

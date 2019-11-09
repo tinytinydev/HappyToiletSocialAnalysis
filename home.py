@@ -14,7 +14,8 @@ def index():
     #Social media counts
     reddit_count = json.loads(socialmedia.reddit_count())["count"]
     instareview_count = json.loads(socialmedia.instareview_count())["count"]
+    insta_response = socialmedia.crawl_toilet_sg()
+    print("INSTA RESULTS")
+    print(insta_response)
 
-
-
-    return render_template('index.html',title='Home',jsonResponse=response,reddit_count=reddit_count,instareview_count=instareview_count)
+    return render_template('index.html',title='Home',jsonResponse=response,reddit_count=reddit_count,instareview_count=instareview_count,insta_crawl=insta_response)

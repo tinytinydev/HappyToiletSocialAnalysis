@@ -45,7 +45,10 @@ def get_coords_with_location_reddit(csv_file):
                 results  =  json.loads(response.content.decode('utf-8'))
 
                 print("Finding: " + location)
-                if(results['found'] !=0):
+                print()
+                print(results)
+
+                if('found' in results and results['found'] !=0):
                     print(results)
                     print("\n\n\n")
                     lat = float(results["results"][0]['LATITUDE'])
@@ -92,7 +95,7 @@ def get_coords_by_name(location_name):
     rowOneMapSearch = one_map_api_url + location_name
     response =  requests.get(rowOneMapSearch)
     results  =  json.loads(response.content.decode('utf-8'))
-    if(results['found'] !=0):
+    if('found' in results and results['found'] !=0):
 
         lat = float(results["results"][0]['LATITUDE'])
         lon = float(results["results"][0]['LONGITUDE'])
