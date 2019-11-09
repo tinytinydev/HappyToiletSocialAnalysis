@@ -1,0 +1,6 @@
+search_tweets_premium:
+  account_type: premium
+  endpoint: https://api.twitter.com/1.1/tweets/search/fullarchive/dev.json
+  bearer_token: AAAAAAAAAAAAAAAAAAAAAIzqAQEAAAAALvvXA2JCU%2BnvuHVOn4Fo6dnea2g%3D9bN7gqipmGLuvSnwni469pqIz6l5U9NOnCFBDvkiS9mvvnzYbq
+  #consumer_key: aWn51sqXMIEBcRElcteW7lmrN
+  #consumer_secret: VjESurQZuyzxttZHkUvlnsf7qGAM1gZ4PKtNKVsu6EU4EY7eXm
