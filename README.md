@@ -1,4 +1,4 @@
-# HappyToiletSocialAnalysis
+# Happy Toilet: A Social Analytics Approach to the Study of Public Toilet Cleanliness
 A Social Analytics project for Singapore Management University module - IS434 Social Analytics & Applications.
 This projects conducts web Scrapping and calling of public API/Data to analyse public toilet insights in Singapore.
 
